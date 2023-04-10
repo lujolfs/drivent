@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import httpStatus from 'http-status';
 import { AuthenticatedRequest } from '@/middlewares';
-import enrollmentsService from '@/services/enrollments-service';
+import enrollmentsService from '@/services/enrollments-service/';
 
 export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
@@ -29,12 +29,13 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
 }
 
 export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response) {
+  const query = req.query.cep as string;
   try {
-    const address = await enrollmentsService.getAddressFromCEP();
-    res.status(httpStatus.OK).send(address);
-  } catch (error) {
-    if (error.name === 'NotFoundError') {
-      return res.send(httpStatus.NO_CONTENT);
+    const treatedResult = await enrollmentsService.getAddressFromCEP(query);
+    res.status(httpStatus.OK).send(treatedResult);
+  } catch (err) {
+    if (err.name === 'NonExistentCEP') {
+      return res.status(404).send({ message: err.message });
     }
   }
 }
