@@ -35,7 +35,7 @@ export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response
     res.status(httpStatus.OK).send(treatedResult);
   } catch (err) {
     if (err.name === 'NonExistentCEP') {
-      return res.status(404).send({ message: err.message });
+      return res.status(httpStatus.NO_CONTENT).send({ message: err.message });
     }
   }
 }

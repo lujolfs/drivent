@@ -4,16 +4,18 @@ import { invalidDataError, nonExistentCep, notFoundError } from '@/errors';
 import addressRepository, { CreateAddressParams } from '@/repositories/address-repository';
 import enrollmentRepository, { CreateEnrollmentParams } from '@/repositories/enrollment-repository';
 import { exclude } from '@/utils/prisma-utils';
+import { ViaCEPAddress } from '@/protocols';
 
 async function getAddressFromCEP(query: string) {
   const result = await request.get(`${process.env.VIA_CEP_API}/${query}/json/`);
   if (result.data.erro) throw nonExistentCep(['This CEP does not exist!']);
+  const { logradouro, complemento, bairro, localidade: cidade, uf }: ViaCEPAddress = result.data;
   const treatedResult = {
-    logradouro: result.data.logradouro,
-    complemento: result.data.complemento,
-    bairro: result.data.bairro,
-    cidade: result.data.localidade,
-    uf: result.data.uf,
+    logradouro,
+    complemento,
+    bairro,
+    cidade,
+    uf,
   };
   return treatedResult;
 }

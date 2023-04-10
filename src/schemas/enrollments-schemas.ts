@@ -4,12 +4,12 @@ import { CreateOrUpdateEnrollmentWithAddress } from '@/services/enrollments-serv
 
 const cpfValidationSchema = Joi.string().length(11).custom(joiCpfValidation).required();
 
-const cepValidationSchema = Joi.string().length(8).custom(JoiCepValidation).required();
+const cepValidationSchema = Joi.string().min(8).custom(JoiCepValidation).required();
 
 const mobilePhoneValidationSchema = Joi.string().min(14).max(15).custom(joiMobilePhoneValidation).required();
 
 export const queryCepValidationSchema = Joi.object({
-  cep: Joi.string().length(8).custom(JoiCepValidation).required(),
+  cep: Joi.string().min(8).custom(JoiCepValidation).required(),
 });
 
 export const createOrUpdateEnrollmentSchema = Joi.object<CreateOrUpdateEnrollmentWithAddress>({
@@ -48,7 +48,11 @@ function JoiCepValidation(value: string, helpers: Joi.CustomHelpers<string>) {
     return helpers.error('any.invalid');
   }
 
-  return value;
+  const sanitizedValue = value.replace(/\D/g, '');
+
+  const formattedValue = sanitizedValue.replace(/^(\d{5})(\d{3})$/, '$1-$2');
+
+  return formattedValue;
 }
 
 function joiMobilePhoneValidation(value: string, helpers: Joi.CustomHelpers<string>) {

@@ -12,7 +12,7 @@ export function validateParams<T>(schema: ObjectSchema<T>): ValidationMiddleware
 }
 
 export function validateQuery<T>(schema: ObjectSchema<T>): ValidationMiddleware {
-  return validate(schema, 'query');
+  return validateOnlyQueries(schema, 'query');
 }
 
 function validate(schema: ObjectSchema, type: 'body' | 'params' | 'query') {
@@ -25,6 +25,20 @@ function validate(schema: ObjectSchema, type: 'body' | 'params' | 'query') {
       next();
     } else {
       res.status(httpStatus.BAD_REQUEST).send(invalidDataError(error.details.map((d) => d.message)));
+    }
+  };
+}
+
+export function validateOnlyQueries(schema: ObjectSchema, type: 'query') {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { error } = schema.validate(req[type], {
+      abortEarly: false,
+    });
+
+    if (!error) {
+      next();
+    } else {
+      res.status(204).send(invalidDataError(error.details.map((d) => d.message)));
     }
   };
 }
