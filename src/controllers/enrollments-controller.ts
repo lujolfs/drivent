@@ -33,9 +33,9 @@ export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response
   try {
     const treatedResult = await enrollmentsService.getAddressFromCEP(query);
     res.status(httpStatus.OK).send(treatedResult);
-  } catch (err) {
-    if (err.name === 'NonExistentCEP') {
-      return res.status(httpStatus.NO_CONTENT).send({ message: err.message });
+  } catch (error) {
+    if (error.name === 'NotFoundError') {
+      return res.sendStatus(httpStatus.NO_CONTENT);
     }
   }
 }

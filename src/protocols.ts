@@ -18,3 +18,12 @@ export type RequestError = {
   name: string;
   message: string;
 };
+
+export type AddressEnrollment = {
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  error?: string;
+};
