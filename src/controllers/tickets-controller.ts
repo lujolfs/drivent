@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import ticketsService from '@/services/tickets-service/tickets-service';
+import ticketsService from '@/services/tickets-service';
 
 export async function getTicketTypes(_req: Request, res: Response) {
   try {
