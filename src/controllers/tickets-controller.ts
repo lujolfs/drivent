@@ -10,7 +10,11 @@ export async function createUserTicket(req: AuthenticatedRequest, res: Response)
     const ticketUser = await ticketsService.createTicket(userId, ticketTypeId);
     return res.status(httpStatus.OK).send(ticketUser);
   } catch (error) {
-    return res.sendStatus(httpStatus.BAD_REQUEST);
+    if (error.name === 'NotFoundError') {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    } else {
+      return res.sendStatus(httpStatus.BAD_REQUEST);
+    }
   }
 }
 

@@ -4,11 +4,11 @@ import enrollmentRepository from '@/repositories/enrollment-repository';
 import { notFoundError, invalidDataError } from '@/errors';
 
 async function createTicket(userId: number, ticketTypeId: number): Promise<Ticket> {
-  const enrollmentId = (await enrollmentRepository.findWithAddressByUserId(userId)).id;
-  if (!enrollmentId) throw notFoundError();
-  const createTicket = await ticketRepository.createTicket(ticketTypeId, enrollmentId);
+  const enrollmentId = await enrollmentRepository.findWithAddressByUserId(userId);
+  if (!enrollmentId.id) throw notFoundError();
+  const createTicket = await ticketRepository.createTicket(ticketTypeId, enrollmentId.id);
   if (!createTicket) throw notFoundError();
-  const userTicket = await ticketRepository.findTicketByEnrollmentId(enrollmentId);
+  const userTicket = await ticketRepository.findTicketByEnrollmentId(enrollmentId.id);
   return userTicket;
 }
 
