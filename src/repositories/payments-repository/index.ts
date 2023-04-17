@@ -1,4 +1,3 @@
-import { Payment } from '@prisma/client';
 import { prisma } from '@/config';
 import { PaymentData } from '@/services/payments-service';
 
