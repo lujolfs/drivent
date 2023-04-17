@@ -8,9 +8,6 @@ async function createTicket(ticketTypeId: number, enrollmentId: number) {
       ticketTypeId,
       enrollmentId,
     },
-    include: {
-      TicketType: true,
-    },
   });
 }
 

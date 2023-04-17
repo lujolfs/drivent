@@ -4,11 +4,11 @@ import { AuthenticatedRequest } from '@/middlewares';
 import ticketsService from '@/services/tickets-service';
 
 export async function createUserTicket(req: AuthenticatedRequest, res: Response) {
+  const { userId, body } = req;
+  const ticketTypeId = body.ticketTypeId;
   try {
-    const { userId } = req;
-    const ticketTypeId = req.body;
-    const ticketUser = await ticketsService.createTicket(userId, ticketTypeId);
-    return res.status(httpStatus.OK).send(ticketUser);
+    const createUserTicket = await ticketsService.createTicket(userId, ticketTypeId);
+    return res.status(httpStatus.CREATED).send(createUserTicket);
   } catch (error) {
     if (error.name === 'NotFoundError') {
       return res.sendStatus(httpStatus.NOT_FOUND);
