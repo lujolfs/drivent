@@ -26,10 +26,16 @@ async function getOneTicket(userId: number) {
   return userTicket;
 }
 
+async function updateTicketStatus(ticketId: number) {
+  const updatedTicket = ticketRepository.updateTicketStatus(ticketId);
+  return updatedTicket;
+}
+
 const ticketsService = {
   getTicketTypes,
   getOneTicket,
   createTicket,
+  updateTicketStatus,
 };
 
 export default ticketsService;
