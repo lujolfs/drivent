@@ -1,7 +1,7 @@
-import { Ticket, TicketType } from '@prisma/client';
+import { TicketType } from '@prisma/client';
 import ticketRepository from '@/repositories/tickets-repository';
 import enrollmentRepository from '@/repositories/enrollment-repository';
-import { notFoundError, invalidDataError, couldntCreateError, requestError } from '@/errors';
+import { notFoundError, couldntCreateError } from '@/errors';
 
 async function createTicket(userId: number, ticketTypeId: number) {
   const enrollment = await enrollmentRepository.findByUserId(userId);
