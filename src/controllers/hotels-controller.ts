@@ -7,7 +7,7 @@ export async function getHotels(req: AuthenticatedRequest, res: Response) {
   const userId = req.userId;
   try {
     const hotels = await hotelsService.getHotels(userId);
-    return res.send(hotels);
+    return res.status(httpStatus.OK).send(hotels);
   } catch (error) {
     if (error.name === 'NotFoundError') {
       res.sendStatus(httpStatus.NOT_FOUND);
