@@ -1,47 +1,43 @@
-import httpStatus from 'http-status';
-import { notFoundError, notPaidError, requestError, unauthorizedError } from '@/errors';
 import hotelRepository from '@/repositories/hotel-repository';
 import enrollmentRepository from '@/repositories/enrollment-repository';
-import ticketRepository from '@/repositories/tickets-repository';
+import { notFoundError } from '@/errors';
+import ticketsRepository from '@/repositories/tickets-repository';
+import { cannotListHotelsError } from '@/errors/cannot-list-hotels-error';
+
+async function listHotels(userId: number) {
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
+  if (!enrollment) {
+    throw notFoundError();
+  }
+  const ticket = await ticketsRepository.findTicketByEnrollmentId(enrollment.id);
+
+  if (!ticket || ticket.status === 'RESERVED' || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
+    throw cannotListHotelsError();
+  }
+}
 
 async function getHotels(userId: number) {
-  if (!userId) throw unauthorizedError();
-  const checkEnrollment = await enrollmentRepository.findById(userId);
-  if (!checkEnrollment) throw notFoundError();
-  const checkTicket = await ticketRepository.findTicketByEnrollmentId(checkEnrollment.id);
-  if (!checkTicket) throw notFoundError();
-  if (
-    checkTicket.status !== 'PAID' ||
-    checkTicket.TicketType.isRemote === true ||
-    checkTicket.TicketType.includesHotel === false
-  )
-    throw notPaidError();
+  await listHotels(userId);
+
   const hotels = await hotelRepository.findHotels();
-  if (!hotels) throw notFoundError();
+  if (!hotels || hotels.length === 0) {
+    throw notFoundError();
+  }
   return hotels;
 }
 
-async function getHotelById(hotelId: number, userId: number) {
-  if (!userId) throw unauthorizedError();
-  if (!hotelId) throw requestError(httpStatus.BAD_REQUEST, httpStatus['400_MESSAGE']);
-  const checkEnrollment = await enrollmentRepository.findById(userId);
-  if (!checkEnrollment) throw notFoundError();
-  const checkTicket = await ticketRepository.findTicketByEnrollmentId(checkEnrollment.id);
-  if (!checkTicket) throw unauthorizedError();
-  if (
-    checkTicket.status !== 'PAID' ||
-    checkTicket.TicketType.isRemote === true ||
-    checkTicket.TicketType.includesHotel === false
-  )
-    throw notPaidError();
-  const hotelCheck = await hotelRepository.findHotelById(hotelId);
-  if (!hotelCheck) throw notFoundError();
-  return hotelCheck;
+async function getHotelsWithRooms(userId: number, hotelId: number) {
+  await listHotels(userId);
+
+  const hotel = await hotelRepository.findHotelById(hotelId);
+
+  if (!hotel || hotel.Rooms.length === 0) {
+    throw notFoundError();
+  }
+  return hotel;
 }
 
-const hotelsService = {
+export default {
   getHotels,
-  getHotelById,
+  getHotelsWithRooms,
 };
-
-export default hotelsService;
