@@ -7,6 +7,12 @@ async function getBooking(userId: number) {
   });
 }
 
+async function getBookingById(bookingId: number) {
+  return prisma.booking.findUnique({
+    where: { id: bookingId },
+  });
+}
+
 async function createBooking(userId: number, roomId: number) {
   return prisma.booking.create({
     data: {
@@ -26,11 +32,24 @@ async function getAllBookings() {
   return prisma.booking.findMany({});
 }
 
+async function updateBooking(bookingId: number, roomId: number) {
+  return prisma.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      roomId,
+    },
+  });
+}
+
 const bookingRepository = {
   getBooking,
   createBooking,
   countBookings,
   getAllBookings,
+  updateBooking,
+  getBookingById,
 };
 
 export default bookingRepository;
