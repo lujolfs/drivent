@@ -8,3 +8,4 @@ export * from './request-error';
 export * from './non-existant-cep';
 export * from './couldnt-create-ticket';
 export * from './not-paid-error';
+export * from './forbidden-error';
