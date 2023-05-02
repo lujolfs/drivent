@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683004142631" clover="3.2.0">
-  <project timestamp="1683004142631" name="All files">
-    <metrics statements="626" coveredstatements="592" conditionals="99" coveredconditionals="80" methods="106" coveredmethods="93" elements="831" coveredelements="765" complexity="0" loc="626" ncloc="626" packages="27" files="68" classes="68"/>
+<coverage generated="1683006397476" clover="3.2.0">
+  <project timestamp="1683006397476" name="All files">
+    <metrics statements="627" coveredstatements="592" conditionals="99" coveredconditionals="80" methods="106" coveredmethods="93" elements="832" coveredelements="765" complexity="0" loc="627" ncloc="627" packages="27" files="68" classes="68"/>
     <package name="src">
       <metrics statements="22" coveredstatements="16" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="2"/>
       <file name="app.ts" path="/home/lujolfs/Driven/drivent/src/app.ts">
@@ -71,7 +71,7 @@
         <line num="11" count="3" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
       </file>
-      <file name="bookings-controller.ts" path="/home/lujolfs/Driven/drivent/src/controllers/bookings-controller.ts">
+      <file name="booking-controller.ts" path="/home/lujolfs/Driven/drivent/src/controllers/booking-controller.ts">
         <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="2" count="11" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
@@ -632,15 +632,16 @@
       </file>
     </package>
     <package name="src.services">
-      <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/lujolfs/Driven/drivent/src/services/index.ts">
-        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.services.authentication-service">
@@ -676,9 +677,9 @@
         <line num="60" count="11" type="stmt"/>
       </file>
     </package>
-    <package name="src.services.bookings-service">
+    <package name="src.services.booking-service">
       <metrics statements="37" coveredstatements="37" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
-      <file name="index.ts" path="/home/lujolfs/Driven/drivent/src/services/bookings-service/index.ts">
+      <file name="index.ts" path="/home/lujolfs/Driven/drivent/src/services/booking-service/index.ts">
         <metrics statements="37" coveredstatements="37" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
         <line num="1" count="11" type="stmt"/>
         <line num="2" count="11" type="stmt"/>
@@ -716,7 +717,7 @@
         <line num="56" count="1" type="stmt"/>
         <line num="57" count="1" type="stmt"/>
         <line num="58" count="1" type="stmt"/>
-        <line num="62" count="11" type="stmt"/>
+        <line num="61" count="11" type="stmt"/>
       </file>
     </package>
     <package name="src.services.enrollments-service">
