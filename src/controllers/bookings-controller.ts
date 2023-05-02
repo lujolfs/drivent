@@ -24,13 +24,14 @@ export async function createBooking(req: AuthenticatedRequest, res: Response, ne
   }
 }
 
-/* export async function updateBooking(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-    const { userId } = req;
-    const { bookingId } = req.params;
-    try {
-        const bookingEdit = await bookingsService.updateBooking(userId, bookingId);
-        return res.status(httpStatus.OK).send(bookingEdit.bookingId);
-    } catch (error) {
-        next(error);
-    }
-} */
+export async function updateBooking(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { userId } = req;
+  const { bookingId } = req.params;
+  const { roomId } = req.body;
+  try {
+    const updatedBookingId = await bookingsService.updateBooking(Number(bookingId), roomId, userId);
+    return res.status(httpStatus.OK).send({ bookingId: updatedBookingId });
+  } catch (error) {
+    next(error);
+  }
+}
